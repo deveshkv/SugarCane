@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Sensor Data Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js" defer></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        header {
+            background-color: #28a745;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .chart-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sugar Cane Dashboard</h1>
+        <p>Real-Time Soil Nutrient and Moisture Monitoring</p>
+    </header>
+
+    <div class="controls">
+        <label for="zoneSelect">Select Zone:</label>
+        <select id="zoneSelect" onchange="fetchData()">
+            <option value="1">Zone 1</option>
+            <option value="2">Zone 2</option>
+            <option value="3">Zone 3</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <div class="chart-box">
+            <h2>NPK Levels</h2>
+            <canvas id="npkChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <h2>Soil Moisture</h2>
+            <canvas id="soilMoistureChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <h2>pH Level</h2>
+            <canvas id="phChart"></canvas>
+        </div>
+    </div>
+</body>
+</html>
