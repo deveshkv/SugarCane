@@ -127,13 +127,19 @@ function updateCharts(data) {
     const phosphorus = data.map(item => parseFloat(item.Phosphorus));
     const potassium = data.map(item => parseFloat(item.Potassium));
 
+    // Calculate average NPK levels
+    const avgNitrogen = nitrogen.reduce((a, b) => a + b, 0) / nitrogen.length;
+    const avgPhosphorus = phosphorus.reduce((a, b) => a + b, 0) / phosphorus.length;
+    const avgPotassium = potassium.reduce((a, b) => a + b, 0) / potassium.length;
+
     // Update NPK Pie Chart
-    npkChart.data.datasets[0].data = [
-        nitrogen.reduce((a, b) => a + b, 0) / nitrogen.length,
-        phosphorus.reduce((a, b) => a + b, 0) / phosphorus.length,
-        potassium.reduce((a, b) => a + b, 0) / potassium.length,
-    ];
+    npkChart.data.datasets[0].data = [avgNitrogen, avgPhosphorus, avgPotassium];
     npkChart.update();
+
+    // Check NPK levels and trigger alerts
+    if (avgNitrogen < 15 || avgPhosphorus < 15 || avgPotassium < 15) {
+        alert("NPK levels are low. Apply necessary fertilizers!");
+    }
 
     // Initialize soil moisture and pH charts with empty data
     soilMoistureChart.data.labels = [];
@@ -166,6 +172,14 @@ function startTimers(data) {
             }
 
             soilMoistureChart.update();
+
+            // Trigger soil moisture alerts
+            if (soilMoistureValue < 40) {
+                alert("Soil moisture is low. Sprinkler is turned ON.");
+            } else if (soilMoistureValue > 70) {
+                alert("Soil moisture is high. Sprinkler is turned OFF.");
+            }
+
             soilMoistureIndex++;
         } else {
             clearInterval(soilMoistureTimer); // Stop timer when all data points are displayed
